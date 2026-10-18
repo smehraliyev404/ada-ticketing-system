@@ -30,7 +30,7 @@ h3 {
 .container {
   max-width: 80rem;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.75rem;
 }
 
 .site-header {
@@ -48,7 +48,7 @@ h3 {
 }
 
 .logo {
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   letter-spacing: 0.04em;
 }
 
@@ -59,7 +59,6 @@ h3 {
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr 20rem;
   gap: 1.25rem;
   padding-top: 1.25rem;
   padding-bottom: 2rem;
@@ -95,12 +94,14 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
+  width: 100%;
 }
 
 .map-controls button {
-  min-width: 2.5rem;
-  height: 2.5rem;
-  padding: 0 0.6rem;
+  flex: 1;
+  min-width: 2.6rem;
+  height: 2.75rem;
+  padding: 0;
   border: 1px solid var(--border);
   border-radius: 8px;
   background-color: var(--surface);
@@ -113,12 +114,13 @@ h3 {
 }
 
 #reset-view {
+  flex: 2;
   font-size: 0.9rem;
 }
 
 .map-viewport {
-  height: 65vh;
-  min-height: 380px;
+  height: 55vh;
+  min-height: 320px;
   max-height: 640px;
   overflow: auto;
   border-radius: 8px;
@@ -161,4 +163,10 @@ h3 {
   color: var(--muted);
   font-size: 0.85rem;
   text-align: center;
+}
+
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: 1fr 20rem;
+  }
 }
