@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADA Hall - Tickets</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="logo">ADA Hall</h1>
+      <p class="event-info">8th November Play at 21:00 in ADA Hall (C building)</p>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="map-area" aria-labelledby="map-heading">
+      <div class="map-header">
+        <h2 id="map-heading">Choose your seats</h2>
+        <div class="map-controls">
+          <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+          <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+          <button type="button" id="move-up" aria-label="Move up">↑</button>
+          <button type="button" id="move-down" aria-label="Move down">↓</button>
+          <button type="button" id="move-left" aria-label="Move left">←</button>
+          <button type="button" id="move-right" aria-label="Move right">→</button>
+          <button type="button" id="reset-view">Reset view</button>
+        </div>
+      </div>
+
+      <div class="map-viewport" id="map-viewport">
+        <div class="venue-map" id="venue-map">
+          <div class="stage">STAGE</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side-panel">
+      <section class="panel" id="seat-details">
+        <h2>Seat details</h2>
+        <p class="hint">Click a seat on the map to see its details.</p>
+      </section>
+
+      <section class="panel" id="cart">
+        <h2>Your cart</h2>
+        <p class="hint">No tickets yet.</p>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Project | Said Mehraliyev | 2026</p>
+    </div>
+  </footer>
+</body>
+</html>
