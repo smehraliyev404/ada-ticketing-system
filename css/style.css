@@ -129,6 +129,18 @@ h3 {
   padding: 1.5rem 2rem 2rem;
 }
 
+.stage {
+  width: 60%;
+  margin: 0 auto 2rem;
+  padding: 0.75rem;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background-color: #e8e1d3;
+  color: #2a2c33;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
 .side-panel {
   display: flex;
   flex-direction: column;
