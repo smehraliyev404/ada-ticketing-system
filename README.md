@@ -21,16 +21,15 @@ The stage is at the top. The closer to the stage, the more expensive the seat.
 | Section     | Rows       | Seats per row | Price  |
 |-------------|------------|---------------|--------|
 | VIP         | A - C      | 16            | 60 AZN |
-| Standard    | D - F      | 20            | 40 AZN |
-| Economy     | G - M      | 20            | 30 AZN |
-| Balcony     | N, P, Q    | 24            | 20 AZN |
+| Standard    | D - E      | 20            | 40 AZN |
+| Economy     | F - M      | 20            | 30 AZN |
+| Balcony     | N, P + side walls BL, BR | 24 (+12 per side) | 20 AZN |
 
 - Like the real hall, every row has two aisles, so the seats are in three blocks: left, middle and right.
-- Standard and Economy are one block of rows on the floor (like in my sketch): the first 3 rows are Standard, the rest is cheaper Economy.
-- The real balcony goes around the hall (about 270°). I simplified it to a straight balcony at the back.
-- Rows I and O are skipped (like in most theatres) so they do not get mixed up with 1 and 0.
-- The balcony is upstairs, so on the map it is drawn separately at the back.
-- Some seats are already sold / blocked and cannot be bought.
+- Standard and Economy are one block of rows on the floor (like in my sketch): the first 2 rows are Standard, the rest is cheaper Economy.
+- Like the real hall, the balcony goes around the hall in a U shape (about 270°): 2 rows at the back (N, P) and 12 seats along each side wall (BL = balcony left, BR = balcony right).
+- Rows I and O are skipped (like in most theatres) so they don't get mixed up with 1 and 0.
+- Some seats are already sold / blocked and can't be bought.
 - Total: 300 seats.
 
 ## How to run
