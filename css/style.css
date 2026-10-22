@@ -210,3 +210,39 @@ h3 {
     grid-template-columns: 1fr 20rem;
   }
 }
+
+.zone {
+  margin-bottom: 1.5rem;
+}
+
+.seat-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.row-label {
+  width: 1.5rem;
+  color: #a9abb3;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.aisle {
+  width: 1.5rem;
+}
+
+.seat {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 6px 6px 3px 3px;
+  background-color: #5d6170;
+  color: #fff;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
