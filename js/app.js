@@ -28,7 +28,7 @@ function renderVenue() {
 
   for (const section of venue.sections) {
     if (section.joinPrevious) {
-      title.textContent += " / " + section.name;
+      title.textContent += ` / ${section.name} - ${section.price} ${venue.currency}`;
     } else {
       zone = document.createElement("section");
       zone.className = "zone";
@@ -36,7 +36,7 @@ function renderVenue() {
 
       title = document.createElement("h3");
       title.className = "zone-title";
-      title.textContent = section.name;
+      title.textContent = `${section.name} - ${section.price} ${venue.currency}`;
       zone.appendChild(title);
       mapEl.appendChild(zone);
     }
@@ -44,6 +44,7 @@ function renderVenue() {
     for (const row of section.rows) {
       const rowEl = document.createElement("div");
       rowEl.className = "seat-row";
+      rowEl.style.setProperty("--seat-color", section.color);
       rowEl.appendChild(createRowLabel(row));
 
       for (let n = 1; n <= section.seatsPerRow; n++) {
@@ -63,5 +64,20 @@ function renderVenue() {
   }
 }
 
+function renderLegend() {
+  const legend = document.getElementById("legend");
+
+  for (const section of venue.sections) {
+    const item = document.createElement("li");
+
+    const swatch = document.createElement("span");
+    swatch.className = "swatch";
+    swatch.style.backgroundColor = section.color;
+
+    item.append(swatch, `${section.name} - ${section.price} ${venue.currency}`);
+    legend.appendChild(item);
+  }
+}
+
 renderVenue();
-console.log("Seats generated:", Object.keys(seats).length);
+renderLegend();
