@@ -1,4 +1,5 @@
 const mapEl = document.getElementById("venue-map");
+const floorEl = document.getElementById("floor");
 
 // every seat is saved here by its id (like "D12") so it's easy to find later
 const seats = {};
@@ -38,7 +39,11 @@ function renderVenue() {
       title.className = "zone-title";
       title.textContent = `${section.name} - ${section.price} ${venue.currency}`;
       zone.appendChild(title);
-      mapEl.appendChild(zone);
+      if (section.sides) {
+        mapEl.appendChild(zone);
+      } else {
+        floorEl.appendChild(zone);
+      }
     }
 
     for (const row of section.rows) {
@@ -61,6 +66,20 @@ function renderVenue() {
       rowEl.appendChild(createRowLabel(row));
       zone.appendChild(rowEl);
     }
+    if (section.sides) {
+      renderBalconySide(section, section.sides.left, "balcony-left");
+      renderBalconySide(section, section.sides.right, "balcony-right");
+    }
+  }
+}
+
+function renderBalconySide(section, row, containerId) {
+  const side = document.getElementById(containerId);
+  side.style.setProperty("--seat-color", section.color);
+  side.appendChild(createRowLabel(row));
+
+  for (let n = 1; n <= section.sides.seats; n++) {
+    side.appendChild(createSeatButton(section, row, n));
   }
 }
 

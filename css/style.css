@@ -293,3 +293,20 @@ h3 {
   height: 14px;
   border-radius: 4px;
 }
+
+.floor-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.balcony-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5rem;
+  padding: 0.5rem;
+  border: 2px dashed #555966;
+  border-radius: 8px;
+}
