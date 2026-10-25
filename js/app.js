@@ -98,5 +98,45 @@ function renderLegend() {
   }
 }
 
+let inspectedId = null; 
+let cart = [];
+
+function getSeatState(id) {
+  if (venue.unavailable.includes(id)) return "unavailable";
+  if (cart.includes(id)) return "in-cart";
+  if (id === inspectedId) return "inspected";
+  return "available";
+}
+
+const stateNames = {
+  available: "Available",
+  inspected: "Selected",
+  "in-cart": "In your cart",
+  unavailable: "Unavailable"
+};
+
+// sets the right class on one seat button
+function updateSeat(id) {
+  const seat = seats[id];
+  const state = getSeatState(id);
+
+  seat.button.classList.remove("seat--inspected", "seat--in-cart", "seat--unavailable");
+  if (state !== "available") {
+    seat.button.classList.add("seat--" + state);
+  }
+  seat.button.classList.toggle("seat--current", id === inspectedId);
+
+  // for screen readers, since the button itself only shows the number
+  seat.button.setAttribute("aria-label",
+    `Row ${seat.row}, seat ${seat.number}, ${seat.section.name}, ${seat.section.price} ${venue.currency}, ${stateNames[state]}`);
+}
+
+function updateAllSeats() {
+  for (const id in seats) {
+    updateSeat(id);
+  }
+}
+
 renderVenue();
 renderLegend();
+updateAllSeats();
