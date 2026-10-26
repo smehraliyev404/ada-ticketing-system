@@ -61,6 +61,15 @@
           <button type="button" id="move-right" aria-label="Move right">→</button>
           <button type="button" id="reset-view" aria-label="Reset view" title="Reset view">↺</button>
         </div>
+
+        <section class="seat-popup" id="seat-details" aria-live="polite" hidden>
+          <button type="button" class="popup-close" id="close-details" aria-label="Close seat details">×</button>
+          <p class="popup-section" id="detail-section"></p>
+          <h3 class="popup-seat">Row <span id="detail-row"></span>, Seat <span id="detail-seat"></span></h3>
+          <p class="popup-info"><strong id="detail-price"></strong> - <span id="detail-status"></span></p>
+          <button type="button" class="btn-primary" id="add-to-cart" disabled>Add to cart</button>
+          <p class="message" id="details-message"></p>
+        </section>
       </div>
     </section>
 

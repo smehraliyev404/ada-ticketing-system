@@ -137,6 +137,75 @@ function updateAllSeats() {
   }
 }
 
+const detailsCard = document.getElementById("seat-details");
+const addButton = document.getElementById("add-to-cart");
+const detailsMessage = document.getElementById("details-message");
+
+function inspectSeat(id) {
+  const previous = inspectedId;
+  inspectedId = id;
+
+  if (previous) updateSeat(previous);
+  updateSeat(id);
+  showDetails();
+}
+
+// a click on a seat bubbles up to the map, closest() finds which seat it was
+mapEl.addEventListener("click", function (event) {
+  const button = event.target.closest(".seat");
+  if (!button || !mapEl.contains(button)) return;
+
+  inspectSeat(button.dataset.id);
+});
+
+function closeDetails() {
+  if (!inspectedId) return;
+
+  const previous = inspectedId;
+  inspectedId = null;
+  updateSeat(previous);
+  showDetails();
+}
+
+document.getElementById("close-details").addEventListener("click", closeDetails);
+
+function showDetails() {
+  if (!inspectedId) {
+    detailsCard.hidden = true;
+    addButton.disabled = true;
+    detailsMessage.textContent = "";
+    return;
+  }
+
+  const seat = seats[inspectedId];
+  const state = getSeatState(inspectedId);
+
+  detailsCard.hidden = false;
+  detailsCard.style.setProperty("--seat-color", seat.section.color);
+
+  document.getElementById("detail-section").textContent = seat.section.name;
+  document.getElementById("detail-row").textContent = seat.row;
+  document.getElementById("detail-seat").textContent = seat.number;
+  document.getElementById("detail-price").textContent = seat.section.price + " " + venue.currency;
+
+  if (state === "inspected") {
+    document.getElementById("detail-status").textContent = "Available (not in cart yet)";
+  } else {
+    document.getElementById("detail-status").textContent = stateNames[state];
+  }
+
+  // only a free seat can be added
+  addButton.disabled = state !== "inspected";
+
+  if (state === "unavailable") {
+    detailsMessage.textContent = "Sorry, this seat is already taken.";
+  } else if (state === "in-cart") {
+    detailsMessage.textContent = "This seat is already in your cart.";
+  } else {
+    detailsMessage.textContent = "";
+  }
+}
+
 renderVenue();
 renderLegend();
 updateAllSeats();
