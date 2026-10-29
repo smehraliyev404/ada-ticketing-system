@@ -206,6 +206,73 @@ function showDetails() {
   }
 }
 
+const cartList = document.getElementById("cart-list");
+
+function addToCart() {
+  if (!inspectedId) return;
+
+  // the button is already disabled in these cases, but just to be safe
+  if (venue.unavailable.includes(inspectedId)) return;
+  if (cart.includes(inspectedId)) {
+    detailsMessage.textContent = "This seat is already in your cart.";
+    return;
+  }
+
+  cart.push(inspectedId);
+  updateSeat(inspectedId);
+  renderCart();
+  showDetails();
+
+  const seat = seats[inspectedId];
+  detailsMessage.textContent = `Row ${seat.row}, seat ${seat.number} added to your cart.`;
+}
+
+function getTotal() {
+  return cart.reduce((sum, id) => sum + seats[id].section.price, 0);
+}
+
+function renderCart() {
+  cartList.replaceChildren();
+
+  for (const id of cart) {
+    const seat = seats[id];
+    const item = document.createElement("li");
+    item.className = "ticket";
+    item.style.setProperty("--seat-color", seat.section.color);
+
+    // left part: section and seat
+    const info = document.createElement("div");
+    info.className = "ticket-info";
+
+    const sectionName = document.createElement("span");
+    sectionName.className = "ticket-section";
+    sectionName.textContent = seat.section.name;
+
+    const place = document.createElement("strong");
+    place.className = "ticket-seat";
+    place.textContent = `Row ${seat.row}, Seat ${seat.number}`;
+
+    info.append(sectionName, place);
+
+    const stub = document.createElement("div");
+    stub.className = "ticket-stub";
+
+    const price = document.createElement("span");
+    price.className = "ticket-price";
+    price.textContent = `${seat.section.price} ${venue.currency}`;
+
+    stub.append(price);
+    item.append(info, stub);
+    cartList.appendChild(item);
+  }
+
+  document.getElementById("cart-count").textContent = cart.length;
+  document.getElementById("cart-total").textContent = getTotal() + " " + venue.currency;
+  document.getElementById("cart-empty").hidden = cart.length > 0;
+}
+
+addButton.addEventListener("click", addToCart);
+
 renderVenue();
 renderLegend();
 updateAllSeats();

@@ -76,8 +76,12 @@
     </section>
 
     <section class="panel tickets" id="cart">
-      <h2>Your tickets</h2>
-      <p class="hint">No tickets yet. Pick a seat on the map.</p>
+      <h2>Your tickets (<span id="cart-count">0</span>)</h2>
+      <p class="hint" id="cart-empty">No tickets yet. Pick a seat on the map.</p>
+      <ul class="ticket-list" id="cart-list"></ul>
+      <div class="checkout">
+        <p class="cart-total">Total <strong id="cart-total">0 AZN</strong></p>
+      </div>
     </section>
   </main>
 
