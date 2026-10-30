@@ -261,7 +261,16 @@ function renderCart() {
     price.className = "ticket-price";
     price.textContent = `${seat.section.price} ${venue.currency}`;
 
-    stub.append(price);
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "remove-btn";
+    removeBtn.textContent = "Remove";
+    removeBtn.setAttribute("aria-label", `Remove row ${seat.row} seat ${seat.number}`);
+    removeBtn.addEventListener("click", function () {
+      removeFromCart(id);
+    });
+
+    stub.append(price, removeBtn);
     item.append(info, stub);
     cartList.appendChild(item);
   }
@@ -269,10 +278,38 @@ function renderCart() {
   document.getElementById("cart-count").textContent = cart.length;
   document.getElementById("cart-total").textContent = getTotal() + " " + venue.currency;
   document.getElementById("cart-empty").hidden = cart.length > 0;
+  document.getElementById("clear-cart").disabled = cart.length === 0;
 }
 
 addButton.addEventListener("click", addToCart);
 
+function removeFromCart(id) {
+  cart = cart.filter(cartId => cartId !== id);
+
+  updateSeat(id); // seat goes back to normal on the map straight away
+  renderCart();
+
+  if (id === inspectedId) {
+    showDetails();
+  }
+}
+
+function clearCart() {
+  if (cart.length === 0) return;
+  if (!confirm("Remove all tickets from the cart?")) return;
+
+  const removed = cart;
+  cart = [];
+  for (const id of removed) {
+    updateSeat(id);
+  }
+  renderCart();
+  showDetails();
+}
+
+document.getElementById("clear-cart").addEventListener("click", clearCart);
+
 renderVenue();
 renderLegend();
 updateAllSeats();
+renderCart();
