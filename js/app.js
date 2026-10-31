@@ -279,6 +279,8 @@ function renderCart() {
   document.getElementById("cart-total").textContent = getTotal() + " " + venue.currency;
   document.getElementById("cart-empty").hidden = cart.length > 0;
   document.getElementById("clear-cart").disabled = cart.length === 0;
+
+  saveCart();
 }
 
 addButton.addEventListener("click", addToCart);
@@ -309,7 +311,34 @@ function clearCart() {
 
 document.getElementById("clear-cart").addEventListener("click", clearCart);
 
+const STORAGE_KEY = "adaHallCart";
+
+// the cart is saved as an object, the seat ids + when it was last changed
+function saveCart() {
+  const savedCart = {
+    seatIds: cart,
+    updatedAt: new Date().toISOString()
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(savedCart));
+}
+
+function loadCart() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return;
+
+  try {
+    const savedCart = JSON.parse(stored);
+    if (Array.isArray(savedCart.seatIds)) {
+      cart = savedCart.seatIds;
+    }
+  } catch (error) {
+    console.warn("Saved cart could not be read, starting with an empty cart");
+    cart = [];
+  }
+}
+
 renderVenue();
 renderLegend();
+loadCart();
 updateAllSeats();
 renderCart();
