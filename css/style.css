@@ -566,3 +566,43 @@ h3 {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (min-width: 37.5rem) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .event-banner h1 {
+    font-size: 2rem;
+  }
+
+  .date-badge {
+    width: 4.75rem;
+    height: 4.75rem;
+  }
+
+  .date-day {
+    font-size: 2rem;
+  }
+
+  .map-viewport {
+    height: 65vh;
+    min-height: 380px;
+  }
+  .ticket-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 60rem) {
+  .ticket-list {
+    display: flex;
+  }
+
+  .tickets {
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+  }
+}
