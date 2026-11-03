@@ -606,3 +606,8 @@ h3 {
     align-self: start;
   }
 }
+
+button:focus-visible {
+  outline: 3px solid #4da3ff;
+  outline-offset: 2px;
+}

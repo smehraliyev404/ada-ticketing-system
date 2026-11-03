@@ -207,6 +207,7 @@ function showDetails() {
 }
 
 const cartList = document.getElementById("cart-list");
+const MAX_TICKETS = 10;
 
 function addToCart() {
   if (!inspectedId) return;
@@ -215,6 +216,11 @@ function addToCart() {
   if (venue.unavailable.includes(inspectedId)) return;
   if (cart.includes(inspectedId)) {
     detailsMessage.textContent = "This seat is already in your cart.";
+    return;
+  }
+
+  if (cart.length >= MAX_TICKETS) {
+    detailsMessage.textContent = `You can buy at most ${MAX_TICKETS} tickets in one order.`;
     return;
   }
 
@@ -319,23 +325,38 @@ function saveCart() {
     seatIds: cart,
     updatedAt: new Date().toISOString()
   };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(savedCart));
+  // localStorage can throw (private mode, storage full), the page should still work then
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedCart));
+  } catch (error) {
+    console.warn("Could not save the cart", error);
+  }
 }
 
 function loadCart() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) return;
-
   try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return;
+
     const savedCart = JSON.parse(stored);
     if (Array.isArray(savedCart.seatIds)) {
-      cart = savedCart.seatIds;
+      for (const id of savedCart.seatIds) {
+        if (seats[id] && !venue.unavailable.includes(id) && !cart.includes(id)) {
+          cart.push(id);
+        }
+      }
     }
   } catch (error) {
     console.warn("Saved cart could not be read, starting with an empty cart");
     cart = [];
   }
 }
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeDetails();
+  }
+});
 
 renderVenue();
 renderLegend();
