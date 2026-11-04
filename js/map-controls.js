@@ -74,3 +74,59 @@ document.getElementById("reset-view").addEventListener("click", resetView);
 window.addEventListener("resize", applyView);
 
 resetView();
+
+viewportEl.addEventListener("wheel", function (event) {
+  event.preventDefault();
+
+  // mouse position measured from the centre of the viewport
+  const rect = viewportEl.getBoundingClientRect();
+  const cx = event.clientX - rect.left - rect.width / 2;
+  const cy = event.clientY - rect.top - rect.height / 2;
+
+  // wheel up = zoom in, wheel down = zoom out
+  if (event.deltaY < 0) {
+    zoomTo(view.zoom * 1.1, cx, cy);
+  } else {
+    zoomTo(view.zoom / 1.1, cx, cy);
+  }
+}, { passive: false });
+
+let dragStart = null;
+let dragMoved = false;
+
+viewportEl.addEventListener("mousedown", function (event) {
+  if (event.button !== 0) return;
+
+  dragStart = { x: event.clientX, y: event.clientY, viewX: view.x, viewY: view.y };
+  dragMoved = false;
+});
+
+// on window, so the drag keeps working if the mouse leaves the map box
+window.addEventListener("mousemove", function (event) {
+  if (!dragStart) return;
+
+  const dx = event.clientX - dragStart.x;
+  const dy = event.clientY - dragStart.y;
+
+  if (!dragMoved && Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+
+  dragMoved = true;
+  viewportEl.classList.add("dragging");
+
+  view.x = dragStart.viewX + dx;
+  view.y = dragStart.viewY + dy;
+  applyView();
+});
+
+window.addEventListener("mouseup", function () {
+  dragStart = null;
+  viewportEl.classList.remove("dragging");
+});
+
+// after dragging, the click that comes at the end should not open a seat
+viewportEl.addEventListener("click", function (event) {
+  if (dragMoved) {
+    event.stopPropagation();
+    dragMoved = false;
+  }
+}, true);

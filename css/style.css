@@ -611,3 +611,22 @@ button:focus-visible {
   outline: 3px solid #4da3ff;
   outline-offset: 2px;
 }
+
+.map-viewport {
+  cursor: grab;
+  user-select: none;
+}
+
+.map-viewport.dragging {
+  cursor: grabbing;
+}
+
+.map-viewport.dragging .venue-map {
+  transition: none;
+}
+
+.map-tip {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
